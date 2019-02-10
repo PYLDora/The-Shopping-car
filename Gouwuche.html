@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车</title>
+  <link href="Gouwuche.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<div class="meta">
+</div>
+
+<div class="middle"><div class="jieduan">购物车</div></div>
+
+<div id="content">
+  <div class="div-list" v-for="item in productlist"
+                               :name="item.name"
+                               :key = "item.id">
+    <ul>
+      <li class="list">
+        <div class="dingwei">
+          <div class="point" v-bind:class="{'check':item.checked}" @click="selectedProduct(item)"></div>
+          <img class="content-pic" :src="item.imgPic"/>
+          <div class="name">选中商品：{{item.name}}</div>
+          <div class="danjia" >单价：{{item.price |formatMoney}}</div>
+          <div class="gift" v-for="gift in item.gifts">赠送：{{gift.partName}}</div>
+
+
+          <div class="count">
+            <div class="add" @click="changeMoney(item,1)">+</div>
+            <input class="input" type="text" value="0"  v-model="item.count" disabled/>
+            <div class="sub" @click="changeMoney(item,-1)">-</div>
+          </div>
+
+          <div class="totalprice">
+           金额： {{item.count*item.price |formatMoney}}
+          </div>
+
+          <div class="delete" @click="deleteProduct(item)">删除</div>
+        </div>
+
+      </li>
+    </ul>
+
+
+   </div>
+
+  <div class="bottom-left">
+    <div class="point "  v-bind:class="{'check':checkAll}"
+                         @click="checkAllData"></div>
+    <div class="allpoint">全选</div>
+  </div>
+
+  <div class="bottom-right">
+    <div class="total">商品总金额：{{totalMoney|formatMoney}}</div>
+    <bottom>确认提交</bottom>
+  </div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.js"></script>
+<script src="Gouwuche.js"></script>
+</body>
+
+
+</html>
